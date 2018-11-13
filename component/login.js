@@ -1,7 +1,32 @@
 import React from 'react';
 import {Platform, StyleSheet, Text, View,Button,TextInput} from 'react-native';
 
+const check = {
+  'account':'test',
+  'password':'123'
+}
+
 export default class Login extends React.Component{
+
+  constructor(props){
+    super(props);
+    this.state = {
+      account:'',
+      password:''
+    };
+    this.handleLogin = this.handleLogin.bind(this);
+  }
+
+  
+
+  handleLogin(){
+    if(this.state.password != check.password){
+      alert('密码错误');
+    }else{
+      this.props.navigation.navigate('Home');
+    }
+  }
+
     render(){
       return(
         <View style={styles.body}>
@@ -16,20 +41,24 @@ export default class Login extends React.Component{
                   <Text style={styles.titleText}>资讯</Text>
                 </View>
                 <View style={styles.account}>
-                  <Text>帐号</Text>
                   <TextInput
+                    placeholder="帐号"
                     style={styles.accountInput}
+                    onChangeText={(text)=>this.setState({account:text})}
                   ></TextInput>
                 </View>
                 <View style={styles.password}>
-                  <Text>密码</Text>
                   <TextInput
+                    placeholder="密码"
                     secureTextEntry={true}
                     style={styles.passwordInput}
+                    onChangeText={(text)=>this.setState({password:text})}
                   ></TextInput>
                 </View>
                 <View style={styles.login}>
-                  <Button style={styles.loginBtn} title="登录" onPress={()=>this.props.navigation.navigate('Home')} />
+                  <Button style={styles.loginBtn} title="登录" 
+                    onPress={this.handleLogin} 
+                  />
                 </View>
               </View>
             </View>
@@ -48,7 +77,8 @@ const styles = StyleSheet.create({
   body:{
     justifyContent:'center',
     flexDirection:'row',
-    flex:1
+    flex:1,
+    backgroundColor:'#FFF'
   },
   bodyLeft:{
     flex:1
@@ -84,11 +114,7 @@ const styles = StyleSheet.create({
     borderStyle:'solid',
     borderColor:'#9C9C9C',
     borderBottomWidth:1,
-    borderTopWidth:1,
-    borderLeftWidth:1,
-    borderRightWidth:1,
     borderRadius:5,
-    height:35
   },
   password:{
     marginTop:20
@@ -97,11 +123,7 @@ const styles = StyleSheet.create({
     borderStyle:'solid',
     borderColor:'#9C9C9C',
     borderBottomWidth:1,
-    borderTopWidth:1,
-    borderLeftWidth:1,
-    borderRightWidth:1,
     borderRadius:5,
-    height:35
   },
   login:{
     marginTop:50

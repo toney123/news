@@ -5,18 +5,30 @@ import Home from './component/home';
 import Login from './component/login';
 
 
-const App = createStackNavigator({
+const StackNavigator = createStackNavigator({
   Home:{
-    screen:Home
+    screen:Home,
   },
   Login:{
-    screen:Login
+    screen:Login,
   }
 },{
-  initialRouteName:'Login'
+  initialRouteName:'Home',
+  // 全局设置
+  navigationOptions:()=>({
+    header:null
+  })
 });
 
-export default App;
+export default class App extends React.Component{
+  
+  render(){
+    return(
+      <StackNavigator />
+    );
+  }
+} 
+
 
 
 
