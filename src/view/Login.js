@@ -23,7 +23,7 @@ export default class Login extends React.Component{
     if(this.state.password != check.password){
       alert('密码错误');
     }else{
-      this.props.navigation.navigate('Home');
+      this.props.navigation.navigate('TabBar');
     }
   }
 

@@ -1,7 +1,8 @@
 import React from 'react';
 import {Platform, StyleSheet, Text, View,Button} from 'react-native';
 
-export default class Personal extends React.Component{
+export default class My extends React.Component{
+
 
     render(){
       return(
