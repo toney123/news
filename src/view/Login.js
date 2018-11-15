@@ -17,14 +17,39 @@ export default class Login extends React.Component{
     this.handleLogin = this.handleLogin.bind(this);
   }
 
-  
+  componentDidMount(){
+     
+  }
 
   handleLogin(){
-    if(this.state.password != check.password){
-      alert('密码错误');
-    }else{
-      this.props.navigation.navigate('TabBar');
-    }
+
+    fetch('https://demo.edu.ink/api/login',{
+      method:'post',
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body:JSON.stringify({
+        email:'admin@edu.ink',
+        password:'21800000'
+      })
+    })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        if(responseJson.data!=null){
+          console.warn(responseJson.data.access_token);
+        }
+      })
+      .catch((error) =>{
+        console.error(error);
+    });
+
+
+    // if(this.state.password != check.password){
+    //   alert('密码错误');
+    // }else{
+    //   this.props.navigation.navigate('TabBar');
+    // }
   }
 
     render(){

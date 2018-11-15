@@ -1,21 +1,39 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import news from '../data/news';
+import NewsDetails from '../component/news/NewsDetails';
 
 export default class ShowNews extends React.Component{
 
-    static navigationOptions = {
-        title: 'XXX标题',
-    };
 
+    constructor(props){
+        super(props);
+        this.state={
+            news:''
+        }
+    }
+
+
+
+    componentWillMount(){
+        const newsId =this.props.navigation.getParam('newsId');
+        news.forEach(element => {
+            if(element.id == newsId){
+                this.setState({
+                    news:element
+                });
+            }
+        });
+    }
+
+    componentDidMount(){
+        
+    }
+    
 
     render(){
-        const newsId =this.props.navigation.getParam('newsId');
-
         return(
-            <View>
-                <Text>查看具体新闻</Text>
-            </View>
+            <NewsDetails news={this.state.news} />
         );
     }
 }

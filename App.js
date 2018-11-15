@@ -53,15 +53,11 @@ const StackNavigator = createStackNavigator({
     screen:ShowNews
   }
 },{
-  initialRouteName:'TabBar',
+  initialRouteName:'Login',
   navigationOptions:()=>({
     headerStyle:{
       backgroundColor:'#DCDCDC',
     },
-    headerTitleStyle:{
-      textAlign:'center',
-      flex:1
-    }
   })
 });
 

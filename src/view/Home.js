@@ -25,7 +25,14 @@ export default class Home extends React.Component{
           <FlatList data={news} 
           keyExtractor={this.extraUniqueKey}
           renderItem={({item,index})=>
-          <TouchableOpacity onPress={()=>{this.props.navigation.navigate('ShowNews',{newsId:item.id})}}>
+          <TouchableOpacity onPress={()=>{
+            this.props.navigation.navigate('ShowNews',
+            {
+              newsId:item.id,
+              newsTitle:item.title
+            })
+            }
+          }>
             <ContentList item={item} />
           </TouchableOpacity>
           }
