@@ -1,16 +1,17 @@
 import React from 'react';
-import {Platform, StyleSheet, Text, View,Button} from 'react-native';
-import {createBottomTabNavigator,createStackNavigator} from 'react-navigation';
+import {AsyncStorage} from 'react-native';
+import {createSwitchNavigator,createBottomTabNavigator,createStackNavigator} from 'react-navigation';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import Login from './src/view/Login';
-import Home from './src/view/Home';
-import My from './src/view/My';
-import ShowNews from './src/view/ShowNews';
+import LoginScreen from './src/view/LoginScreen';
+import HomeScreen from './src/view/HomeScreen';
+import MyScreen from './src/view/MyScreen';
+import ShowNewsScreen from './src/view/ShowNewsScreen';
+import Storage from 'react-native-storage';
+import StartScreen from './src/view/StartScreen';
 
-
-const TabBar = createBottomTabNavigator({
+const BottomTabNavigator = createBottomTabNavigator({
   Home:{
-    screen:Home,
+    screen:HomeScreen,
     navigationOptions: ({ navigation }) => ({
       tabBarIcon: ({ focused, horizontal, tintColor }) => (
         <Icon name="home" size={25} color={tintColor} />
@@ -19,7 +20,7 @@ const TabBar = createBottomTabNavigator({
     }),
   },
   My:{
-    screen:My,
+    screen:MyScreen,
     navigationOptions: ({ navigation }) => ({
       tabBarIcon: ({ focused, horizontal, tintColor }) => (
         <Icon name="user" size={25} color={tintColor} />
@@ -36,24 +37,30 @@ const TabBar = createBottomTabNavigator({
 
 
 const StackNavigator = createStackNavigator({
+  Start:{
+    screen:StartScreen,
+    navigationOptions:()=>({
+      header:null
+    })
+  },
   TabBar:{
-    screen:TabBar,
+    screen:BottomTabNavigator,
     navigationOptions:()=>({
       title:'资讯',
       headerLeft:null
     })
   },
   Login:{
-    screen:Login,
+    screen:LoginScreen,
     navigationOptions:()=>({
       header:null
     })
   },
   ShowNews:{
-    screen:ShowNews
+    screen:ShowNewsScreen
   }
 },{
-  initialRouteName:'Login',
+  initialRouteName:'Start',
   navigationOptions:()=>({
     headerStyle:{
       backgroundColor:'#DCDCDC',
@@ -62,6 +69,26 @@ const StackNavigator = createStackNavigator({
 });
 
 export default class App extends React.Component{
+
+  constructor(props){
+    super(props);
+    // 初始化存储配置
+    let storage = new Storage({
+      size:1000,
+      storageBackend:AsyncStorage,
+      defaultExpires:null,
+      enableCache:true,
+      sync:{
+
+      }
+    });
+    global.storage = storage;
+
+  }
+
+  componentWillMount(){
+    
+  }
   
   render(){
     return(

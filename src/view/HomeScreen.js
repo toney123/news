@@ -4,7 +4,7 @@ import ContentList from '../component/home/ContentList';
 import news from '../data/news';
 
 
-export default class Home extends React.Component{
+export default class HomeScreen extends React.Component{
 
     constructor(props){
       super(props);
@@ -28,8 +28,7 @@ export default class Home extends React.Component{
           <TouchableOpacity onPress={()=>{
             this.props.navigation.navigate('ShowNews',
             {
-              newsId:item.id,
-              newsTitle:item.title
+              news:item,
             })
             }
           }>

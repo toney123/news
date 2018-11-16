@@ -6,7 +6,7 @@ const check = {
   'password':'123'
 }
 
-export default class Login extends React.Component{
+export default class LoginScreen extends React.Component{
 
   constructor(props){
     super(props);
@@ -26,30 +26,32 @@ export default class Login extends React.Component{
     fetch('https://demo.edu.ink/api/login',{
       method:'post',
       headers: {
-        Accept: "application/json",
         "Content-Type": "application/json"
       },
       body:JSON.stringify({
-        email:'admin@edu.ink',
-        password:'21800000'
+        email:this.state.account,
+        password:this.state.password
       })
     })
       .then((response) => response.json())
       .then((responseJson) => {
         if(responseJson.data!=null){
-          console.warn(responseJson.data.access_token);
+
+          global.storage.save({
+            key:'loginStatus',
+            data:{
+              token:responseJson.data.access_token
+            },
+            expires:null
+          });
+          
+          this.props.navigation.navigate('Home');
         }
       })
       .catch((error) =>{
         console.error(error);
     });
 
-
-    // if(this.state.password != check.password){
-    //   alert('密码错误');
-    // }else{
-    //   this.props.navigation.navigate('TabBar');
-    // }
   }
 
     render(){
