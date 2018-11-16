@@ -1,12 +1,13 @@
 import React from 'react';
 import {Text,View,StyleSheet,TouchableOpacity} from 'react-native';
+import {NavigationActions} from 'react-navigation';
 
 export default class StartScreen extends React.Component{
 
     constructor(props){
         super(props);
-        this.waitTime = 5000;
-        this.openTimer = false,
+        this.waitTime = 3000;
+        this.openTimer = true,
         this.state={
             nowTime:'',
         }
@@ -18,10 +19,10 @@ export default class StartScreen extends React.Component{
             this.switchTimer = setTimeout(()=>{
                 // 关闭倒计时
                 clearInterval(this.overplusTimer);
-                this.props.navigation.navigate(pageName);
+                this.props.navigation.reset([NavigationActions.navigate({ routeName: pageName })],0);
             },time);
         }else{
-            this.props.navigation.navigate(pageName);
+            this.props.navigation.reset([NavigationActions.navigate({ routeName: pageName })],0);
         }
     }
 
@@ -43,7 +44,7 @@ export default class StartScreen extends React.Component{
           }).then(ret=>{
            global.token = ret.token;
 
-           this.jumpNewPage(this.openTimer,this.waitTime,'Home');
+           this.jumpNewPage(this.openTimer,this.waitTime,'TabBar');
             
           }).catch(err=>{
             switch(err.name){
@@ -64,11 +65,13 @@ export default class StartScreen extends React.Component{
         // 关闭定时器
         clearTimeout(this.switchTimer);
         
+        let pageName;
         if(global.token==undefined){
-            this.props.navigation.navigate('Login');
+            pageName='Login';
         }else{
-            this.props.navigation.navigate('Home');
+            pageName='TabBar';
         }
+        this.props.navigation.reset([NavigationActions.navigate({ routeName: pageName })],0);
     }
 
 

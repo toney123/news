@@ -1,5 +1,6 @@
 import React from 'react';
 import {Platform, StyleSheet, Text, View,Button,TextInput} from 'react-native';
+import {NavigationActions} from 'react-navigation';
 
 const check = {
   'account':'test',
@@ -35,8 +36,7 @@ export default class LoginScreen extends React.Component{
     })
       .then((response) => response.json())
       .then((responseJson) => {
-        if(responseJson.data!=null){
-
+        if(responseJson.error==0){
           global.storage.save({
             key:'loginStatus',
             data:{
@@ -44,8 +44,12 @@ export default class LoginScreen extends React.Component{
             },
             expires:null
           });
+
+          global.token = responseJson.data.access_token;
           
-          this.props.navigation.navigate('Home');
+          this.props.navigation.reset([NavigationActions.navigate({ routeName: 'TabBar' })],0);
+        }else{
+          alert(responseJson.message);
         }
       })
       .catch((error) =>{
